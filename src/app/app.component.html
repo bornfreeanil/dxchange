@@ -1,0 +1,76 @@
+<!-- Toolbar -->
+<div class="toolbar" role="banner">
+  <img
+    width="40"
+    alt="Angular Logo"
+    src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
+  />
+  <span>Dynamic Form</span>
+  <div class="spacer"></div>
+</div>
+
+<div class="content" role="main">
+    <div *ngIf="showDynamicForm">
+      <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit()">
+        <div class="card m-3">
+          <h5 class="card-header">{{dynamicSchema.title}}</h5>
+          <div class="card-body">
+            <p class="mb-5">{{dynamicSchema.description}}</p>
+            
+            <div class="">
+              <div class="row">
+                <div class="col">
+                  <div *ngFor="let field of dynamicSchema.properties | keyvalue: originalOrder">
+
+                    <div class="">
+                      <label class="form-control-label" [attr.for]="field.key">
+                        {{field.value.title}}
+                        <strong class="text-danger" *ngIf="dynamicSchema.required.includes(field.key)">*</strong>
+                      </label>
+                    </div>
+      
+                    <div class="mb-3" [ngSwitch]="field.key">
+                      <div *ngSwitchCase="'password'">
+                        <input type="password" class="form-control" [id]="field.key" [name]="field.key" [formControlName]="field.key" [placeholder]="field.value.title" />
+                      </div>
+                      <div *ngSwitchCase="'bio'">
+                        <textarea [formControlName]="field.key" [id]="field.key" rows="9" class="form-control" [placeholder]="field.value.title"></textarea>
+                      </div>
+                      <div *ngSwitchCase="'age'">
+                        <input type="number" class="form-control" [id]="field.key" [name]="field.key" [formControlName]="field.key" [placeholder]="field.value.title" />
+                      </div>
+                      <div *ngSwitchDefault>
+                        <input type="text" class="form-control" [id]="field.key" [name]="field.key" [formControlName]="field.key" [placeholder]="field.value.title" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="clear mt-5">
+                    <button class="btn btn-primary mr-1">Submit</button>
+                    <button class="btn btn-secondary mr-1" type="reset" (click)="onReset()">Reset</button>
+                  </div>
+                </div>
+                <div class="col">
+                  <div *ngFor="let field of dynamicForm.controls | keyvalue: originalOrder">
+                    <div>{{field.key | titlecase}}: &nbsp; <strong>{{field.value.value}}</strong></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="jumbotron" *ngIf="!showDynamicForm">
+      <h1 class="display-4">Hello, DXChange.io!</h1>
+      <p class="lead">This is a simple Dynamic Forms, a simple dynamic forms component for calling based on schema.json, if in case any changes in schema.json key,values it'll work as expected.</p>
+      <hr class="my-4">
+      <p>I'm using bootstrap classes for for this sample application.</p>
+      <a class="btn btn-primary btn-lg" href="javscript:void(0)" (click)="openDynamicForm()" role="button">Click Me!</a>
+    </div>    
+
+</div>
+
+
