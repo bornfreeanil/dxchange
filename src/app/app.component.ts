@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, FormArray } from '@angular/forms';
 import * as schema from '../assets/json/schema.json';
 import { KeyValue } from '@angular/common';
 
@@ -36,9 +36,12 @@ export class AppComponent{
     this.dynamicForm.reset();
   }
   
+  getControl(key: any){
+    return this.dynamicForm.controls[key].value;
+  }
 
   // compareFn for keyvalue
-  originalOrder = (a: KeyValue<number,string>, b: KeyValue<number,string>): number => {
+  originalOrder = ((a: KeyValue<number,string>, b: KeyValue<number,string>): number => {
     return 0;
-  }
+  })
 }

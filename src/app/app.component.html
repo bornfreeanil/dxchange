@@ -51,8 +51,8 @@
                   </div>
                 </div>
                 <div class="col">
-                  <div *ngFor="let field of dynamicForm.controls | keyvalue: originalOrder">
-                    <div>{{field.key | titlecase}}: &nbsp; <strong>{{field.value.value}}</strong></div>
+                  <div *ngFor="let field of dynamicSchema.properties | keyvalue:originalOrder">
+                    <div>{{field.value.title | titlecase}}: &nbsp; <strong>{{getControl(field.key)}}</strong></div>
                   </div>
                 </div>
               </div>
